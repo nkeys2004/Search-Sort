@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -17,64 +19,38 @@ import javafx.scene.control.Button;
 
 
 public class Main extends Application implements EventHandler<ActionEvent> {
-    Button button;
-    Button button2;
+    Button Searchbutton;
+    Button SortButton;
     Button CloseButton;
     Button AlertButton;
     Scene SearchScene;
+    Scene StartScene;
     Scene scene2;
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Search & Sort");
-        Label WelcomeMessage = new Label("Search & Sort");
-        button = new Button();
-        button.setText("Searching Algorithim");
-        button.setOnAction(this);
-        StackPane layout= new StackPane();
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout,300,250);
         primaryStage.setOnCloseRequest(e -> closeProgram());
 
-        HBox topMenu = new HBox(20);
-        Button buttonA = new Button("ButtonA");
-        Button buttonB = new Button("ButtonB");
-        Button buttonC = new Button("ButtonC");
-        topMenu.getChildren().addAll(buttonA,buttonB,buttonC);
+        // Main Home Screen Scene
+        VBox MainScreen = new VBox(50);
+        MainScreen.setAlignment(Pos.CENTER);
+        MainScreen.setPadding(new Insets(15,12,15,12));
+        Label WelcomeMessage = new Label("Search & Sort Algorithims");
+        Searchbutton = new Button("Searching Algorithims");
+        SortButton = new Button("Sorting Algorithims");
+        HBox Buttons = new HBox(50);
+        Buttons.setAlignment(Pos.CENTER);
+        Buttons.setPadding(new Insets(15,12,15,12));
+        Buttons.getChildren().addAll(Searchbutton,SortButton);
+        MainScreen.getChildren().addAll(WelcomeMessage,Buttons);
+        Searchbutton.setOnAction( e ->primaryStage.setScene(scene2));
+        SortButton.setOnAction( e ->primaryStage.setScene(scene2));
+        StartScene = new Scene(MainScreen,600,300);
 
-        VBox leftMenu = new VBox(20);
-        Button buttonD = new Button("ButtonD");
-        Button buttonE = new Button("ButtonE");
-        Button buttonF = new Button("ButtonF");
-        leftMenu.getChildren().addAll(buttonD,buttonE,buttonF);
+        // Searching Screen Scene
 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(topMenu);
-        borderPane.setLeft(leftMenu);
-
-        GridPane grid = new GridPane();
-        
-
-
-
-
-        button.setOnAction( e ->primaryStage.setScene(scene2));
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(WelcomeMessage,button);
-        SearchScene = new Scene(borderPane);
-        button2 = new Button();
-        button2.setText("Go Back");
-        button2.setOnAction( e ->primaryStage.setScene(SearchScene));
-        AlertButton =  new Button();
-        AlertButton.setText("Begin The Search");
-        AlertButton.setOnAction(e -> {
-            boolean result = ConfirmBox.display("Title Of The Window","Wow ths alert box is awesome","Test");
-            System.out.println(result);
-        });
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().addAll(button2,AlertButton);
-        scene2 = new Scene(layout2,600,300);
-        primaryStage.setScene(SearchScene);
+        primaryStage.setScene(StartScene);
         primaryStage.show();
     }
 
@@ -83,7 +59,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     }
     @Override
     public void handle(ActionEvent event) {
-        if(event.getSource()==button) {
+        if(event.getSource()==Searchbutton) {
             System.out.println("Test");
         }
     }
