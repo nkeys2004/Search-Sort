@@ -76,7 +76,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         System.out.println("Enter the value which is being searched for: ");
         String newvalue = sc.nextLine();  //Input Search Algorithim;
         Locationlist = binarysearch(array,newvalue);
-        System.out.println(Locationlist);
         int number = Locationlist.size(); //Finds the length of the ArrayList
         switch (number) { //Using Case Statements for each particular situations
             case 1: // When Only One Prints 1 Locations
@@ -85,20 +84,22 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             case 0: // When location length is zero, no value had been assigned to the
                 System.out.println("Value Cannot be found");
                 break;
-            default: //If Value is not 1 or 0, it must be a multiple occurence situation
+            default: //If Value is not 1 or 0, it must be a multiple occurance situation
                 System.out.println("Value Found At Multiple Locations");
                 for (int j = 0; j <= (number - 1); j++) { //So i need to print each location using a for loop
                     System.out.println("Location" + (Locationlist.get(j) + 1)); //Printing Each Location
                 }
                 break;
         }
-
+/*
         int array2[] = {3, 60, 35, 2, 45, 320, 5};
         SortAlg = BubbSort(array2);
         System.out.println(Arrays.toString(SortAlg));
         int array3[] = {3, 60, 35, 2, 45, 320, 5};
         SortAlg2 = InsertSort(array3);
         System.out.println(Arrays.toString(SortAlg2));
+
+ */
         launch(args);
     }
         /*
@@ -145,14 +146,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     public static <T extends Comparable<T>> ArrayList binarysearch(T[] array, T searchvalue) {
         ArrayList<Integer> BinaryLocations = new ArrayList<>(); //Initalises the ArrayList
-        boolean Found = true;
+        boolean Found = true; //Sets both boolan values to true
         boolean checknew = true;
-        int upperbound = array.length-1;
+        int upperbound = array.length-1; //Maximum Search Value
         int Arraytop = array.length-1;
         int midValue= 0;
         int lowerbound = 0;
-        int i = 0;
-        if (array[0] == searchvalue) {
+        if (array[0] == searchvalue) { //If in location 0
             BinaryLocations.add(0);
             midValue = 0;
             Found = !Found;
@@ -160,18 +160,17 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         while ((Found) && (upperbound != lowerbound)) {
             midValue = (upperbound + lowerbound) / 2;
-            int check=array[midValue].compareTo(searchvalue);
-            System.out.println(check);
+            int check=array[midValue].compareTo(searchvalue); //If Equal the result of this calculation will be zero
             if (check == 0) {
                 BinaryLocations.add(midValue);
                 Found = !Found;
             } else {
-                if (array[midValue].compareTo(searchvalue) > 0) {
+                if (check > 0) { //If greater than zero, value being searched for is in first half
                     upperbound = midValue;
-                } else {
+                } else { //Would be greater than zero
                     lowerbound = midValue;
                 }
-                if (array[Arraytop] == searchvalue) {
+                if (array[Arraytop].compareTo(searchvalue)==0) {
                     BinaryLocations.add(Arraytop);
                     checknew = !checknew;
                     Found = !Found;
@@ -179,16 +178,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         }
             while (checknew) {
-                System.out.println("midValue is"+midValue);
-                System.out.println("lowerbound is"+lowerbound);
-                for (int j = midValue-1; j >= lowerbound; j--) {
-                   System.out.println("RUNNING?");
+                for (int j = midValue-1; j >= lowerbound; j--) { //Checks all values less than first found
                     if (array[j].compareTo(searchvalue)==0) {
                         BinaryLocations.add(j);
                     }
                 }
                 midValue=midValue+1;
-                for (int n = midValue; n <= upperbound; n++) {
+                for (int n = midValue; n <= upperbound; n++) { //Checks all values greater than first found
                     if (array[n].compareTo(searchvalue)==0) {
                         BinaryLocations.add(n);
                     }
