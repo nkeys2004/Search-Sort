@@ -166,7 +166,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 BinaryLocations.add(midValue);
                 Found = !Found;
             } else {
-                System.out.println("Check Doesn't Occur");
                 if (array[midValue].compareTo(searchvalue) > 0) {
                     upperbound = midValue;
                 } else {
@@ -180,15 +179,17 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         }
             while (checknew) {
-                midValue=midValue-1;
-                for (int j = midValue; j > lowerbound; j--) {
-                    if (array[j] == searchvalue) {
+                System.out.println("midValue is"+midValue);
+                System.out.println("lowerbound is"+lowerbound);
+                for (int j = midValue-1; j >= lowerbound; j--) {
+                   System.out.println("RUNNING?");
+                    if (array[j].compareTo(searchvalue)==0) {
                         BinaryLocations.add(j);
                     }
                 }
-                midValue=midValue+2;
+                midValue=midValue+1;
                 for (int n = midValue; n <= upperbound; n++) {
-                    if (array[n] == searchvalue) {
+                    if (array[n].compareTo(searchvalue)==0) {
                         BinaryLocations.add(n);
                     }
                 }
