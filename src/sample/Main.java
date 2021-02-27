@@ -75,7 +75,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Scanner sc = new Scanner(System.in); //Initalises the scanner
         System.out.println("Enter the value which is being searched for: ");
         String newvalue = sc.nextLine();  //Input Search Algorithim;
-        Locationlist = binarysearch(array,newvalue);
+        // Locationlist = binarysearch(array,newvalue);
+        String[] BubbleArray= BubbSort(array);
+        System.out.println("SortedArray");
+        System.out.println(Arrays.toString(BubbleArray));
         int number = Locationlist.size(); //Finds the length of the ArrayList
         switch (number) { //Using Case Statements for each particular situations
             case 1: // When Only One Prints 1 Locations
@@ -194,12 +197,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         return BinaryLocations;
    }
 
-    public static  int[] BubbSort(int[] arr) {
+    public static  <T extends Comparable<T>> T[] BubbSort(T[] arr) {
         int n = arr.length;
         for(int i=0; i < n; i++){
             for(int j=1; j < (n-i); j++){
-                if(arr[j-1] > arr[j]){
-                    int temporary = arr[j-1];
+                int no = (arr[j-1].compareTo(arr[j]));
+                if(no>0){
+                   T temporary = arr[j-1];
                     arr[j-1] = arr[j];
                     arr[j] = temporary;
                 }
