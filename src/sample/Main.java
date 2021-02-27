@@ -74,13 +74,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         var size = array.length; //Find How Many Values are currently stored within the array
         Scanner sc = new Scanner(System.in); //Initalises the scanner
         System.out.println("Enter the value which is being searched for: ");
-        var newvalue = sc.nextLine();  //Input Search Algorithim
-        BV = Integer.parseInt(newvalue);
-        int[] arr = new int[size];
-        for (int i = 0; i < (size); i++) {
-            arr[i] = Integer.parseInt(array[i]);
-        }
-        // Locationlist = binarysearch(arr, BV);
+        String newvalue = sc.nextLine();  //Input Search Algorithim;
+        Locationlist = binarysearch(array,newvalue);
+        System.out.println(Locationlist);
         int number = Locationlist.size(); //Finds the length of the ArrayList
         switch (number) { //Using Case Statements for each particular situations
             case 1: // When Only One Prints 1 Locations
@@ -96,6 +92,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 }
                 break;
         }
+
         int array2[] = {3, 60, 35, 2, 45, 320, 5};
         SortAlg = BubbSort(array2);
         System.out.println(Arrays.toString(SortAlg));
@@ -146,43 +143,45 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         return Locations; //Returns the locations ArrayList
     }
 
-/*
-    public static <T extends Comparable> ArrayList binarysearch(T[] array, T searchvalue) {
+    public static <T extends Comparable<T>> ArrayList binarysearch(T[] array, T searchvalue) {
         ArrayList<Integer> BinaryLocations = new ArrayList<>(); //Initalises the ArrayList
         boolean Found = true;
         boolean checknew = true;
         int upperbound = array.length-1;
         int Arraytop = array.length-1;
+        int midValue= 0;
         int lowerbound = 0;
         int i = 0;
         if (array[0] == searchvalue) {
             BinaryLocations.add(0);
-            T midValue = 0;
+            midValue = 0;
             Found = !Found;
         }
 
         while ((Found) && (upperbound != lowerbound)) {
-            T midValue = (upperbound + lowerbound) / 2;
-            if (array[midValue].compareTo(searchvalue)) {
+            midValue = (upperbound + lowerbound) / 2;
+            int check=array[midValue].compareTo(searchvalue);
+            System.out.println(check);
+            if (check == 0) {
                 BinaryLocations.add(midValue);
                 Found = !Found;
             } else {
-                if (array[midValue] < searchvalue) {
-                    lowerbound = midValue+1;
+                System.out.println("Check Doesn't Occur");
+                if (array[midValue].compareTo(searchvalue) > 0) {
+                    upperbound = midValue;
                 } else {
-                        upperbound = midValue;
-                    }
-            }
-            if (array[Arraytop] == searchvalue) {
-                BinaryLocations.add(Arraytop);
-                checknew =  !checknew;
-                Found = !Found;
+                    lowerbound = midValue;
+                }
+                if (array[Arraytop] == searchvalue) {
+                    BinaryLocations.add(Arraytop);
+                    checknew = !checknew;
+                    Found = !Found;
+                }
             }
         }
             while (checknew) {
                 midValue=midValue-1;
                 for (int j = midValue; j > lowerbound; j--) {
-                    System.out.println(j);
                     if (array[j] == searchvalue) {
                         BinaryLocations.add(j);
                     }
@@ -197,7 +196,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             }
         return BinaryLocations;
    }
- */
+
     public static  int[] BubbSort(int[] arr) {
         int n = arr.length;
         for(int i=0; i < n; i++){
