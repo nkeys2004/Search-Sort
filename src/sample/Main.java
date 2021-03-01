@@ -9,10 +9,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.control.Button;
@@ -21,11 +21,14 @@ import javafx.scene.control.Button;
 public class Main extends Application implements EventHandler<ActionEvent> {
     Button Searchbutton;
     Button SortButton;
+    Button SearchLinear;
+    Button SearchBinary;
     Button CloseButton;
     Button AlertButton;
     Scene SearchScene;
     Scene StartScene;
-    Scene scene2;
+    Scene SortScene;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -35,21 +38,47 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         // Main Home Screen Scene
         VBox MainScreen = new VBox(50);
         MainScreen.setAlignment(Pos.CENTER);
-        MainScreen.setPadding(new Insets(15,12,15,12));
+        MainScreen.setPadding(new Insets(15, 12, 15, 12));
         Label WelcomeMessage = new Label("Search & Sort Algorithims");
         Searchbutton = new Button("Searching Algorithims");
         SortButton = new Button("Sorting Algorithims");
         HBox Buttons = new HBox(50);
         Buttons.setAlignment(Pos.CENTER);
-        Buttons.setPadding(new Insets(15,12,15,12));
-        Buttons.getChildren().addAll(Searchbutton,SortButton);
-        MainScreen.getChildren().addAll(WelcomeMessage,Buttons);
-        Searchbutton.setOnAction( e ->primaryStage.setScene(scene2));
-        SortButton.setOnAction( e ->primaryStage.setScene(scene2));
-        StartScene = new Scene(MainScreen,600,300);
+        Buttons.setPadding(new Insets(15, 12, 15, 12));
+        Buttons.getChildren().addAll(Searchbutton, SortButton);
+        MainScreen.getChildren().addAll(WelcomeMessage, Buttons);
+        Searchbutton.setOnAction(e -> primaryStage.setScene(SearchScene));
+        StartScene = new Scene(MainScreen, 600, 300);
+
+
 
         // Searching Screen Scene
-
+        VBox SearchMain = new VBox(50);
+        SearchMain.setAlignment(Pos.CENTER);
+        SearchMain.setPadding(new Insets(15, 12, 15, 12));
+        Label Title = new Label("Searching");
+        HBox SButtons = new HBox(50);
+        HBox Input1 = new HBox(50);
+        HBox Input2 = new HBox(50);
+        Label InputValS = new Label("Input Values Here: ");
+        TextField SValInput = new TextField();
+        Label InputValSea = new Label("Input SearchValue Here: ");
+        TextField SeaValInput = new TextField();
+        SearchLinear= new Button("Search With Linear");
+        SearchBinary = new Button("Search With Binary");
+        SButtons.setAlignment(Pos.CENTER);
+        SButtons.setPadding(new Insets(15, 12, 15, 12));
+        SButtons.getChildren().addAll(SearchLinear,SearchBinary);
+        Input1.getChildren().addAll(InputValS,SValInput);
+        Input2.getChildren().addAll(InputValSea,SeaValInput);
+        Input1.setAlignment(Pos.CENTER);
+        Input2.setAlignment(Pos.CENTER);
+        SearchLinear.setOnAction((e) -> {
+                System.out.println(SValInput.getText());
+                primaryStage.setScene(StartScene);
+        });
+        SearchMain.getChildren().addAll(Title,Input1,Input2,SButtons);
+        SearchScene = new Scene(SearchMain, 600, 300);
         primaryStage.setScene(StartScene);
         primaryStage.show();
     }
@@ -57,17 +86,19 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     private void closeProgram() {
         System.out.println("File Save Here");
     }
+
     @Override
     public void handle(ActionEvent event) {
-        if(event.getSource()==Searchbutton) {
-            System.out.println("Test");
         }
-    }
 
     public static void main(String[] args) {
+        String myStr1 = "HELLO";
+        String myStr2 = "hello";
+        System.out.println(myStr1.compareToIgnoreCase(myStr2));
         ArrayList<Integer> namelist = new ArrayList<>();
         ArrayList<Integer> Locationlist = new ArrayList<>();
         int BV = 0;
+        String[] BubbleArray;
         int[] SortAlg;
         int[] SortAlg2;
         String[] array = takingarrayinput(); //Array To Be Searched Input
@@ -75,11 +106,26 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Scanner sc = new Scanner(System.in); //Initalises the scanner
         System.out.println("Enter the value which is being searched for: ");
         String newvalue = sc.nextLine();  //Input Search Algorithim;
-        // Locationlist = binarysearch(array,newvalue);
-        String[] BubbleArray= BubbSort(array);
-        System.out.println("SortedArray");
-        System.out.println(Arrays.toString(BubbleArray));
+        Locationlist = binarysearch(array,newvalue);
+        /*
+        try {
+            Integer [] intarray=new Integer[array.length];
+            int i=0;
+            for(String str:array){
+                intarray[i]=Integer.parseInt(str);//Exception in this line
+                i++;
+            }
+            Integer[] BubbleInt= new Integer[array.length];
+            BubbleInt= BubbSort(intarray);
+            System.out.println("Sorted Array" + Arrays.toString(BubbleInt));
+        } catch(Exception e) {
+            BubbleArray = BubbSort(array);
+            System.out.println("Sorted Array" + Arrays.toString(BubbleArray));
+        }
+
+         */
         int number = Locationlist.size(); //Finds the length of the ArrayList
+       // System.out.println("Length Of Location"+number);
         switch (number) { //Using Case Statements for each particular situations
             case 1: // When Only One Prints 1 Locations
                 System.out.println("Value being searched for is in location " + (Locationlist.get(0) + 1));
@@ -151,9 +197,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         ArrayList<Integer> BinaryLocations = new ArrayList<>(); //Initalises the ArrayList
         boolean Found = true; //Sets both boolan values to true
         boolean checknew = true;
-        int upperbound = array.length-1; //Maximum Search Value
-        int Arraytop = array.length-1;
-        int midValue= 0;
+        int upperbound = array.length - 1; //Maximum Search Value
+        int Arraytop = array.length - 1;
+        int midValue = 0;
         int lowerbound = 0;
         if (array[0] == searchvalue) { //If in location 0
             BinaryLocations.add(0);
@@ -161,68 +207,78 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             Found = !Found;
         }
 
-        while ((Found) && (upperbound != lowerbound)) {
+        while ((Found) && (upperbound != lowerbound) && upperbound>lowerbound) {
             midValue = (upperbound + lowerbound) / 2;
-            int check=array[midValue].compareTo(searchvalue); //If Equal the result of this calculation will be zero
+            int check = array[midValue].compareTo(searchvalue); //If Equal the result of this calculation will be zero
             if (check == 0) {
                 BinaryLocations.add(midValue);
                 Found = !Found;
             } else {
                 if (check > 0) { //If greater than zero, value being searched for is in first half
-                    upperbound = midValue;
+                    upperbound = midValue-1;
                 } else { //Would be greater than zero
-                    lowerbound = midValue;
+                    lowerbound = midValue+1;
                 }
-                if (array[Arraytop].compareTo(searchvalue)==0) {
+                if (array[Arraytop].compareTo(searchvalue) == 0) {
                     BinaryLocations.add(Arraytop);
-                    checknew = !checknew;
                     Found = !Found;
+                    checknew = !checknew;
                 }
             }
-        }
-            while (checknew) {
-                for (int j = midValue-1; j >= lowerbound; j--) { //Checks all values less than first found
-                    if (array[j].compareTo(searchvalue)==0) {
-                        BinaryLocations.add(j);
-                    }
-                }
-                midValue=midValue+1;
-                for (int n = midValue; n <= upperbound; n++) { //Checks all values greater than first found
-                    if (array[n].compareTo(searchvalue)==0) {
-                        BinaryLocations.add(n);
-                    }
-                }
-                checknew = !checknew;
-            }
-        return BinaryLocations;
-   }
 
-    public static  <T extends Comparable<T>> T[] BubbSort(T[] arr) {
-        int n = arr.length;
-        for(int i=0; i < n; i++){
-            for(int j=1; j < (n-i); j++){
-                int no = (arr[j-1].compareTo(arr[j]));
-                if(no>0){
-                   T temporary = arr[j-1];
-                    arr[j-1] = arr[j];
-                    arr[j] = temporary;
+        }
+        while (checknew) {
+            for (int j = midValue - 1; j >= lowerbound; j--) { //Checks all values less than first found
+                if (array[j].compareTo(searchvalue) == 0) {
+                    BinaryLocations.add(j);
                 }
             }
+            midValue = midValue + 1;
+            for (int n = midValue; n <= upperbound; n++) { //Checks all values greater than first found
+                if (array[n].compareTo(searchvalue) == 0) {
+                    BinaryLocations.add(n);
+                }
+            }
+            checknew = false;
+        }
+        return BinaryLocations;
+    }
+
+    public static <T extends Comparable<T>> T[] BubbSort(T[] arr) {
+        int n = arr.length;
+        int check = 0;
+        boolean fullsort = true;
+        while (fullsort) {
+            fullsort = false;
+            check = 0;
+                for (int j = 0; j < (n - 1); j++) {
+                    T Test1= arr[j];
+                    T Test2= arr[j+1];
+                    int no = (Test1.compareTo(Test2));
+                    if (no > 0) {
+                        T temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                        check = check +1;
+                        fullsort = true;
+                    }
+                }
         }
         return arr;
     }
-
-    public static int[] InsertSort(int[] arr) {
+/*
+    public static <T extends Comparable<T>> T[] InsertSort(T[] arr) {
         int length= arr.length;
         System.out.println(length);
-        int[] sorted = new int[length];
-        int[] unsorted;
+        T sorted = new int[length];
+        T unsorted;
         int temporary=0;
         unsorted = arr;
         sorted[0]=unsorted[0];
         for (int i=0; i<(unsorted.length);i++){
             for(int j=1; j < ((unsorted.length)-i); j++){
-               if (unsorted[j]<sorted[i]) {
+                (unsorted[j].compareTo(sorted[i])
+               if (unsorted[j].compareTo(sorted[i]) {
                    temporary= sorted[i];
                    sorted[i]= unsorted[j];
                    sorted[i+1] = temporary;
@@ -233,7 +289,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
         return unsorted;
      }
-
+*/
 }
-
 
