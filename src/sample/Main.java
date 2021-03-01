@@ -1,5 +1,7 @@
 package sample;
 import java.io.Closeable;
+import java.math.*;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -92,6 +94,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
 
     public static void main(String[] args) {
+        // Compare();
         ArrayList<Integer> namelist = new ArrayList<>();
         ArrayList<Integer> Locationlist = new ArrayList<>();
         int BV = 0;
@@ -101,28 +104,31 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         String[] array = takingarrayinput(); //Array To Be Searched Input
         var size = array.length; //Find How Many Values are currently stored within the array
         Scanner sc = new Scanner(System.in); //Initalises the scanner
-        System.out.println("Enter the value which is being searched for: ");
-        String newvalue = sc.nextLine();  //Input Search Algorithim;
-        Locationlist = binarysearch(array,newvalue);
-        /*
+      //  System.out.println("Enter the value which is being searched for: ");
+        // String newvalue = sc.nextLine();  //Input Search Algorithim;
+       // Locationlist = binarysearch(array,newvalue);
         try {
-            Integer [] intarray=new Integer[array.length];
+            Double [] intarray=new Double[array.length];
             int i=0;
             for(String str:array){
-                intarray[i]=Integer.parseInt(str);//Exception in this line
+                intarray[i]=Double.parseDouble(str);//Exception in this line
                 i++;
             }
-            Integer[] BubbleInt= new Integer[array.length];
+            Double[] BubbleInt;
             BubbleInt= BubbSort(intarray);
+            DecimalFormat df = new DecimalFormat("0.#");
+            int w =0;
+            for (double d :BubbleInt) {
+                BubbleInt[i] = Double.valueOf(df.format(BubbleInt[i]));
+                w++;
+            }
             System.out.println("Sorted Array" + Arrays.toString(BubbleInt));
         } catch(Exception e) {
             BubbleArray = BubbSort(array);
             System.out.println("Sorted Array" + Arrays.toString(BubbleArray));
         }
-
-         */
+        /*
         int number = Locationlist.size(); //Finds the length of the ArrayList
-       // System.out.println("Length Of Location"+number);
         switch (number) { //Using Case Statements for each particular situations
             case 1: // When Only One Prints 1 Locations
                 System.out.println("Value being searched for is in location " + (Locationlist.get(0) + 1));
@@ -197,7 +203,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         int upperbound = array.length - 1; //Maximum Search Value
         int Arraytop = array.length - 1;
         int midValue = 0;
-        int check;
+        int check=0;
         int lowerbound = 0;
         if (array[0].compareTo(searchvalue)==0) { //If in location 0
             BinaryLocations.add(0);
@@ -207,31 +213,27 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         while ((Found) && (upperbound != lowerbound) && upperbound>lowerbound) {
             midValue = (upperbound + lowerbound+1) / 2;
-            System.out.println(array[midValue]);
-            System.out.println(searchvalue);
           try {
-              int no= Integer.parseInt(array[midValue]);
-              int intSV = Integer.parseInt(searchvalue);
+              int no= Integer.parseInt((String) array[midValue]);
+              int intSV = Integer.parseInt((String) searchvalue);
               if (no > intSV) {
-                  check = -1;
+                  check = 1;
               }
               if (no == intSV) {
                   check = 0;
               }
               if (no < intSV) {
-                  check = 1;
+                  check = -1;
               }
           } catch (Exception e) {
               check = (array[midValue].compareTo(searchvalue));
             }
+
               if (check == 0) {
                   BinaryLocations.add(midValue);
                   Found = !Found;
               } else {
-                  System.out.println("2midValue" + array[midValue]);
-                  System.out.println(searchvalue);
-                  System.out.println("check" + check);
-                  System.out.println(array[midValue]);
+
                   if (check < 0) { //If greater than zero, value being searched for is in first half
                       lowerbound = midValue + 1;
                   } else { //Would be greater than zero
@@ -284,7 +286,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
         return arr;
     }
-/*
+
     public static <T extends Comparable<T>> T[] InsertSort(T[] arr) {
         int length= arr.length;
         System.out.println(length);
@@ -307,6 +309,16 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
         return unsorted;
      }
-*/
+
+
+    public static void Compare() {
+        System.out.println("2".compareTo("4"));
+        String[] Array = {"Volvo", "BMW", "Ford", "Mazda"};
+        long startTime = System.nanoTime();
+        Array = BubbSort(Array);
+        long endTime = System.nanoTime();
+        System.out.println("That took " + (endTime - startTime) + " Microseconds");
+        System.out.println(Arrays.toString(Array));
+    }
 }
 
