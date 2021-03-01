@@ -92,9 +92,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
 
     public static void main(String[] args) {
-        String myStr1 = "HELLO";
-        String myStr2 = "hello";
-        System.out.println(myStr1.compareToIgnoreCase(myStr2));
         ArrayList<Integer> namelist = new ArrayList<>();
         ArrayList<Integer> Locationlist = new ArrayList<>();
         int BV = 0;
@@ -200,33 +197,54 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         int upperbound = array.length - 1; //Maximum Search Value
         int Arraytop = array.length - 1;
         int midValue = 0;
+        int check;
         int lowerbound = 0;
-        if (array[0] == searchvalue) { //If in location 0
+        if (array[0].compareTo(searchvalue)==0) { //If in location 0
             BinaryLocations.add(0);
             midValue = 0;
             Found = !Found;
         }
 
         while ((Found) && (upperbound != lowerbound) && upperbound>lowerbound) {
-            midValue = (upperbound + lowerbound) / 2;
-            int check = array[midValue].compareTo(searchvalue); //If Equal the result of this calculation will be zero
-            if (check == 0) {
-                BinaryLocations.add(midValue);
-                Found = !Found;
-            } else {
-                if (check > 0) { //If greater than zero, value being searched for is in first half
-                    upperbound = midValue-1;
-                } else { //Would be greater than zero
-                    lowerbound = midValue+1;
-                }
-                if (array[Arraytop].compareTo(searchvalue) == 0) {
-                    BinaryLocations.add(Arraytop);
-                    Found = !Found;
-                    checknew = !checknew;
-                }
+            midValue = (upperbound + lowerbound+1) / 2;
+            System.out.println(array[midValue]);
+            System.out.println(searchvalue);
+          try {
+              int no= Integer.parseInt(array[midValue]);
+              int intSV = Integer.parseInt(searchvalue);
+              if (no > intSV) {
+                  check = -1;
+              }
+              if (no == intSV) {
+                  check = 0;
+              }
+              if (no < intSV) {
+                  check = 1;
+              }
+          } catch (Exception e) {
+              check = (array[midValue].compareTo(searchvalue));
             }
+              if (check == 0) {
+                  BinaryLocations.add(midValue);
+                  Found = !Found;
+              } else {
+                  System.out.println("2midValue" + array[midValue]);
+                  System.out.println(searchvalue);
+                  System.out.println("check" + check);
+                  System.out.println(array[midValue]);
+                  if (check < 0) { //If greater than zero, value being searched for is in first half
+                      lowerbound = midValue + 1;
+                  } else { //Would be greater than zero
+                      upperbound = midValue - 1;
+                  }
+                  if (array[Arraytop].compareTo(searchvalue) == 0) {
+                      BinaryLocations.add(Arraytop);
+                      Found = !Found;
+                      checknew = !checknew;
+                  }
+              }
 
-        }
+          }
         while (checknew) {
             for (int j = midValue - 1; j >= lowerbound; j--) { //Checks all values less than first found
                 if (array[j].compareTo(searchvalue) == 0) {
