@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.control.Button;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Main extends Application implements EventHandler<ActionEvent> {
@@ -27,6 +29,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button SearchBinary;
     Button CloseButton;
     Button AlertButton;
+    Button SortBubble;
+    Button SortInsersion;
     Scene SearchScene;
     Scene StartScene;
     Scene SortScene;
@@ -77,10 +81,41 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Input2.setAlignment(Pos.CENTER);
         SearchLinear.setOnAction((e) -> {
                 System.out.println(SValInput.getText());
+                String string= SValInput.getText();
+                String[] ArraySplit=string.split( "[\\s,]+" ); // split on on one or more spaces or commas
+                System.out.println(Arrays.toString(ArraySplit));
                 primaryStage.setScene(StartScene);
         });
         SearchMain.getChildren().addAll(Title,Input1,Input2,SButtons);
         SearchScene = new Scene(SearchMain, 600, 300);
+/*
+        //Sorting Scene
+        VBox SortMain = new VBox(50);
+        SearchMain.setAlignment(Pos.CENTER);
+        SearchMain.setPadding(new Insets(15, 12, 15, 12));
+        Label TitleSort = new Label("Sorting");
+        HBox SortButtons = new HBox(50);
+        HBox UnsortInput = new HBox(50);
+        Label InputValSort = new Label("Input Values Here: ");
+        TextField SortValInput = new TextField();
+        SortBubble= new Button("Bubble Sort");
+        SearchBinary = new Button("Insertion Sort");
+        SButtons.setAlignment(Pos.CENTER);
+        SButtons.setPadding(new Insets(15, 12, 15, 12));
+        SButtons.getChildren().addAll(SearchLinear,SearchBinary);
+        Input1.getChildren().addAll(InputValS,SValInput);
+        Input2.getChildren().addAll(InputValSea,SeaValInput);
+        Input1.setAlignment(Pos.CENTER);
+        Input2.setAlignment(Pos.CENTER);
+        SearchLinear.setOnAction((e) -> {
+            System.out.println(SValInput.getText());
+            primaryStage.setScene(StartScene);
+        });
+        SearchMain.getChildren().addAll(Title,Input1,Input2,SButtons);
+        SearchScene = new Scene(SearchMain, 600, 300);
+
+*/
+
         primaryStage.setScene(StartScene);
         primaryStage.show();
     }
@@ -267,6 +302,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public static <T extends Comparable<T>> T[] BubbSort(T[] arr) {
         int n = arr.length;
         int check = 0;
+        int no = 0;
         boolean fullsort = true;
         while (fullsort) {
             fullsort = false;
@@ -274,7 +310,18 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                 for (int j = 0; j < (n - 1); j++) {
                     T Test1= arr[j];
                     T Test2= arr[j+1];
-                    int no = (Test1.compareTo(Test2));
+                    try {
+                        int Val2 = Integer.parseInt((String)Test2);
+                        int Val1 = Integer.parseInt((String)Test1);
+                        if (Val2<Val1) {
+                            no = 1;
+                        } else {
+                            no = -1;
+                        }
+                    } catch(Exception e) {
+                        no = (Test1.compareTo(Test2));
+                    }
+
                     if (no > 0) {
                         T temp = arr[j];
                         arr[j] = arr[j+1];
@@ -287,6 +334,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         return arr;
     }
 
+    /*
     public static <T extends Comparable<T>> T[] InsertSort(T[] arr) {
         int length= arr.length;
         System.out.println(length);
@@ -310,7 +358,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         return unsorted;
      }
 
-
+*/
     public static void Compare() {
         System.out.println("2".compareTo("4"));
         String[] Array = {"Volvo", "BMW", "Ford", "Mazda"};
