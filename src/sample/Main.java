@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.control.Button;
 
-
 public class Main extends Application implements EventHandler<ActionEvent> {
     Button Searchbutton;
     Button SortButton;
@@ -53,7 +52,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         StartScene = new Scene(MainScreen, 600, 300);
 
 
-
         // Searching Screen Scene
         VBox SearchMain = new VBox(50);
         SearchMain.setAlignment(Pos.CENTER);
@@ -66,73 +64,73 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         TextField SValInput = new TextField();
         Label InputValSea = new Label("Input SearchValue Here: ");
         TextField SeaValInput = new TextField();
-        SearchLinear= new Button("Search With Linear");
+        SearchLinear = new Button("Search With Linear");
         SearchBinary = new Button("Search With Binary");
         SButtons.setAlignment(Pos.CENTER);
-        SButtons.setPadding(new Insets(15, 12, 15,0));
-        SButtons.getChildren().addAll(SearchLinear,SearchBinary);
-        Input1.getChildren().addAll(InputValS,SValInput);
-        Input2.getChildren().addAll(InputValSea,SeaValInput);
+        SButtons.setPadding(new Insets(15, 12, 15, 0));
+        SButtons.getChildren().addAll(SearchLinear, SearchBinary);
+        Input1.getChildren().addAll(InputValS, SValInput);
+        Input2.getChildren().addAll(InputValSea, SeaValInput);
         Input1.setAlignment(Pos.CENTER);
         Input2.setAlignment(Pos.CENTER);
         SearchLinear.setOnAction((e) -> {
-                    String linearLabel;
-                    System.out.println(SValInput.getText());
-                    ArrayList<Integer> namelist = new ArrayList<>();
-                    String string = SValInput.getText();
-                    String[] ArraySplit = string.split("[\\s,]+"); // split on on one or more spaces or commas
-                    System.out.println(Arrays.toString(ArraySplit));
-                    int size=ArraySplit.length-1;
-                    String newvalue = SeaValInput.getText();
-                    namelist = linearsearch(ArraySplit, newvalue, size); //Carries Out Linear Search by calling the method
-                    int number = namelist.size(); //Finds the length of the ArrayList
-                    switch (number) { //Using Case Statements for each particular situations
-                        case 1: // When Only One Prints 1 Locations
-                            linearLabel=("Value being searched for is in location " + (namelist.get(0)+1));
-                            break;
-                        case 0: // When location length is zero, no value had been assigned to the
-                            linearLabel=("Value Cannot be found");
-                            break;
-                        default: //If Value is not 1 or 0, it must be a multiple occurence situation
-                            linearLabel=("Values Found At Multiple Locations: Locations"+namelist);
-                            break;
-                    }
-                    AlertBox.display("Searching Result",linearLabel,"Searching");
-                    SValInput.clear();
-                    SeaValInput.clear();
-                    primaryStage.setScene(StartScene);
-                });
+            String linearLabel;
+            System.out.println(SValInput.getText());
+            ArrayList<Integer> namelist = new ArrayList<>();
+            String string = SValInput.getText();
+            String[] ArraySplit = string.split("[\\s,]+"); // split on on one or more spaces or commas
+            System.out.println(Arrays.toString(ArraySplit));
+            int size = ArraySplit.length - 1;
+            String newvalue = SeaValInput.getText();
+            namelist = linearsearch(ArraySplit, newvalue, size); //Carries Out Linear Search by calling the method
+            int number = namelist.size(); //Finds the length of the ArrayList
+            switch (number) { //Using Case Statements for each particular situations
+                case 1: // When Only One Prints 1 Locations
+                    linearLabel = ("Value being searched for is in location " + (namelist.get(0) + 1));
+                    break;
+                case 0: // When location length is zero, no value had been assigned to the
+                    linearLabel = ("Value Cannot be found");
+                    break;
+                default: //If Value is not 1 or 0, it must be a multiple occurence situation
+                    linearLabel = ("Values Found At Multiple Locations: Locations" + namelist);
+                    break;
+            }
+            AlertBox.display("Searching Result", linearLabel, "Searching");
+            SValInput.clear();
+            SeaValInput.clear();
+            primaryStage.setScene(StartScene);
+        });
         SearchBinary.setOnAction((e) -> {
             System.out.println(SValInput.getText());
             String string = SValInput.getText();
             String[] ArraySplit = string.split("[\\s,]+"); // split on on one or more spaces or commas
             System.out.println(Arrays.toString(ArraySplit));
-            int size=ArraySplit.length-1;
+            int size = ArraySplit.length - 1;
             String newvalue = SeaValInput.getText();
             String binaryLabel;
             ArrayList<Integer> Locationlist = new ArrayList<>();
-            Locationlist = binarysearch(ArraySplit,newvalue);
+            Locationlist = binarysearch(ArraySplit, newvalue);
             int number = Locationlist.size(); //Finds the length of the ArrayList
             switch (number) { //Using Case Statements for each particular situations
                 case 1: // When Only One Prints 1 Locations
-                    binaryLabel=("Value being searched for is in location " +(Locationlist.get(0)));
+                    binaryLabel = ("Value being searched for is in location " + (Locationlist.get(0)+1));
                     break;
                 case 0: // When location length is zero, no value had been assigned to the
-                    binaryLabel=("Value Cannot be found");
+                    binaryLabel = ("Value Cannot be found");
                     break;
                 default: //If Value is not 1 or 0, it must be a multiple occurance situation
-                    binaryLabel=("Values Found At Multiple Locations: Locations"+Locationlist);
+                    binaryLabel = ("Values Found At Multiple Locations: Locations" + Locationlist);
                     break;
-                }
-            AlertBox.display("Searching Result",binaryLabel,"Searching");
+            }
+            AlertBox.display("Searching Result", binaryLabel, "Searching");
             SValInput.clear();
             SeaValInput.clear();
             primaryStage.setScene(StartScene);
         });
-        SearchMain.getChildren().addAll(Title,Input1,Input2,SButtons);
+        SearchMain.getChildren().addAll(Title, Input1, Input2, SButtons);
         SearchScene = new Scene(SearchMain, 600, 300);
 
-       //Sorting Scene
+        //Sorting Scene
         VBox SortMain = new VBox(50);
         SortMain.setAlignment(Pos.CENTER);
         SortMain.setPadding(new Insets(15, 12, 15, 12));
@@ -141,13 +139,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         HBox UnsortInput = new HBox(50);
         Label InputValSort = new Label("Input Values Here: ");
         TextField SortValInput = new TextField();
-        SortBubble= new Button("Bubble Sort");
+        SortBubble = new Button("Bubble Sort");
         SortIsertion = new Button("Insertion Sort");
         Compare = new Button("Compare Which is more efficent");
         SortButtons.setAlignment(Pos.CENTER);
         SortButtons.setPadding(new Insets(15, 12, 15, 12));
-        SortButtons.getChildren().addAll(SortBubble,SortIsertion);
-        UnsortInput.getChildren().addAll(InputValSort,SortValInput);
+        SortButtons.getChildren().addAll(SortBubble, SortIsertion);
+        UnsortInput.getChildren().addAll(InputValSort, SortValInput);
         UnsortInput.setAlignment(Pos.CENTER);
         SortBubble.setOnAction((e) -> {
             String[] BubbleArray;
@@ -172,17 +170,82 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     BubbleArray[i] = (Double.valueOf(df.format(BubbleInt[i]))).toString();
                     w++;
                 }
-            } catch(Exception g) {
+            } catch (Exception g) {
                 BubbleArray = BubbSort(array);
             }
-            BubbleLabel="Sorted Array"+Arrays.toString(BubbleArray);
-            AlertBox.display("Searching Result",BubbleLabel,"Searching");
+            BubbleLabel = "Sorted Array" + Arrays.toString(BubbleArray);
+            AlertBox.display("Searching Result", BubbleLabel, "Searching");
+            SortValInput.clear();
+            primaryStage.setScene(StartScene);
+        });
+        SortIsertion.setOnAction((e) -> {
+            String InsertLabel;
+            System.out.println(SortValInput.getText());
+            String string = SortValInput.getText();
+            String[] array = string.split("[\\s,]+"); // split on on one or more spaces or commas
+            System.out.println(Arrays.toString(array));
+            String[] InsertArray= new String[array.length];
+            Object[] Returnarray;
+            try {
+                Double[] Doublearray = new Double[array.length];
+                int i = 0;
+                for (String str : array) {
+                    Doublearray[i] = Double.parseDouble(str);//Exception in this line
+                    i++;
+                }
+                Returnarray=InsertSort(Doublearray);
+                DecimalFormat df = new DecimalFormat("0.#");
+                int w = 0;
+                for (w = 0; w < (Returnarray.length); w++) {
+                    InsertArray[w] = (Double.valueOf(df.format(Returnarray[w]))).toString();
+                }
+                System.out.println("Sorted Array" + Arrays.toString(InsertArray));
+            } catch (Exception F) {
+                InsertArray = InsertSort(array);
+                System.out.println("Sorted Array" +Arrays.toString(InsertArray));
+            }
+            InsertLabel = "Sorted Array" + (Arrays.toString(InsertArray));
+            AlertBox.display("Sorting Result", InsertLabel, "Sorting");
+            SortValInput.clear();
+            primaryStage.setScene(StartScene);
+        });
+        Compare.setOnAction((e) -> {
+            String[] BubbleArray;
+            String ResultLabel;
+            String Output;
+            System.out.println(SortValInput.getText());
+            String string = SortValInput.getText();
+            String string2 = SortValInput.getText();
+            String[] array = string.split("[\\s,]+"); // split on on one or more spaces or commas
+            System.out.println(Arrays.toString(array));
+            try {
+                Double[] intarray = new Double[array.length];
+                int i = 0;
+                for (String str : array) {
+                    intarray[i] = Double.parseDouble(str);//Exception in this line
+                    i++;
+                }
+                BubbleArray = new String[array.length];
+                Double[] BubbleInt;
+                Output=Compare(intarray);
+                DecimalFormat df = new DecimalFormat("0.#");
+                int w = 0;
+                for (double d : BubbleInt) {
+                    BubbleArray[i] = (Double.valueOf(df.format(BubbleInt[i]))).toString();
+                    w++;
+                }
+            } catch(Exception g) {
+                Output=Compare(array);
+            }
+            AlertBox.display("Effiency Test",Output,"Searching");
             SortValInput.clear();
             primaryStage.setScene(StartScene);
         });
 
-        SortMain.getChildren().addAll(TitleSort,UnsortInput,SortButtons,Compare);
-        SortScene= new Scene(SortMain, 600, 300);
+
+         */
+        SortMain.getChildren().addAll(TitleSort, UnsortInput, SortButtons, Compare);
+        SortScene = new Scene(SortMain, 600, 300);
 
         primaryStage.setScene(StartScene);
         primaryStage.show();
@@ -194,35 +257,32 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        }
+    }
 
-    public static void main(String[] args){
-            ArrayList InsertArray;
-            String[] array = takingarrayinput(); //Array To Be Searched Input
-            Compare(array);
-
-            try {
-                Double[] Doublearray = new Double[array.length];
-                int i = 0;
-                for (String str : array) {
-                    Doublearray[i] = Double.parseDouble(str);//Exception in this line
-                    i++;
-                }
-                InsertArray = InsertSort(Doublearray);
-
+    public static void main(String[] args) {
+        String[] array = takingarrayinput(); //Array To Be Searched Input
+        String[] InsertArray= new String[array.length];
+        Object[] Returnarray;
+        try {
+            Double[] Doublearray = new Double[array.length];
+            int i = 0;
+            for (String str : array) {
+                Doublearray[i] = Double.parseDouble(str);//Exception in this line
+                i++;
+            }
+            Returnarray=InsertSort(Doublearray);
             DecimalFormat df = new DecimalFormat("0.#");
-            int w =0;
-            for (double d :BubbleInt) {
-                BubbleInt[i] = Double.valueOf(df.format(BubbleInt[i]));
-                w++;
+            int w = 0;
+            for (w = 0; w < (Returnarray.length); w++) {
+                InsertArray[w] = (Double.valueOf(df.format(Returnarray[w]))).toString();
             }
-                System.out.println("Sorted Array" + InsertArray);
-            } catch (Exception e) {
-                InsertArray = InsertSort(array);
-                System.out.println("Sorted Array" + InsertArray);
-            }
-            launch(args);
+            System.out.println("Sorted Array" + Arrays.toString(InsertArray));
+        } catch (Exception e) {
+            InsertArray = InsertSort(array);
+            System.out.println("Sorted Array" +Arrays.toString(InsertArray));
         }
+        launch(args);
+    }
 
     public static String[] takingarrayinput() {
         int n;
@@ -238,7 +298,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         return array;
     }
 
-    public static ArrayList linearsearch(String array[], String searchvalue, int n) {
+    public static ArrayList linearsearch(String[] array, String searchvalue, int n) {
         ArrayList<Integer> Locations = new ArrayList<>(); //Initalises the ArrayList
         for (int i = 0; i <= n; i++) {
             if (array[i].equals(searchvalue)) { //Using this equals section
@@ -255,49 +315,49 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         int upperbound = array.length - 1; //Maximum Search Value
         int Arraytop = array.length - 1;
         int midValue = 0;
-        int check=0;
+        int check = 0;
         int lowerbound = 0;
-        if (array[0].compareTo(searchvalue)==0) { //If in location 0
+        if (array[0].compareTo(searchvalue) == 0) { //If in location 0
             BinaryLocations.add(0);
             midValue = 0;
             Found = !Found;
         }
-        while ((Found) && (upperbound != lowerbound) && upperbound>lowerbound) {
-            midValue = (upperbound + lowerbound+1) / 2;
-          try {
-              int no= Integer.parseInt((String) array[midValue]);
-              int intSV = Integer.parseInt((String) searchvalue);
-              if (no > intSV) {
-                  check = 1;
-              }
-              if (no == intSV) {
-                  check = 0;
-              }
-              if (no < intSV) {
-                  check = -1;
-              }
-          } catch (Exception e) {
-              check = (array[midValue].compareTo(searchvalue));
+        while ((Found) && (upperbound != lowerbound) && upperbound > lowerbound) {
+            midValue = (upperbound + lowerbound + 1) / 2;
+            try {
+                int no = Integer.parseInt((String) array[midValue]);
+                int intSV = Integer.parseInt((String) searchvalue);
+                if (no > intSV) {
+                    check = 1;
+                }
+                if (no == intSV) {
+                    check = 0;
+                }
+                if (no < intSV) {
+                    check = -1;
+                }
+            } catch (Exception e) {
+                check = (array[midValue].compareTo(searchvalue));
             }
 
-              if (check == 0) {
-                  BinaryLocations.add(midValue);
-                  Found = !Found;
-              } else {
+            if (check == 0) {
+                BinaryLocations.add(midValue);
+                Found = !Found;
+            } else {
 
-                  if (check < 0) { //If greater than zero, value being searched for is in first half
-                      lowerbound = midValue + 1;
-                  } else { //Would be greater than zero
-                      upperbound = midValue - 1;
-                  }
-                  if (array[Arraytop].compareTo(searchvalue) == 0) {
-                      BinaryLocations.add(Arraytop);
-                      Found = !Found;
-                      checknew = !checknew;
-                  }
-              }
+                if (check < 0) { //If greater than zero, value being searched for is in first half
+                    lowerbound = midValue + 1;
+                } else { //Would be greater than zero
+                    upperbound = midValue - 1;
+                }
+                if (array[Arraytop].compareTo(searchvalue) == 0) {
+                    BinaryLocations.add(Arraytop);
+                    Found = !Found;
+                    checknew = !checknew;
+                }
+            }
 
-          }
+        }
         while (checknew) {
             for (int j = midValue - 1; j >= lowerbound; j--) { //Checks all values less than first found
                 if (array[j].compareTo(searchvalue) == 0) {
@@ -323,76 +383,69 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         while (fullsort) {
             fullsort = false;
             check = 0;
-                for (int j = 0; j < (n - 1); j++) {
-                    T Test1= arr[j];
-                    T Test2= arr[j+1];
-                    try {
-                        Double Val2 = Double.parseDouble((String)Test2);
-                        Double Val1 = Double.parseDouble((String)Test1);
-                        if (Val2<Val1) {
-                            no = 1;
-                        } else {
-                            no = -1;
-                        }
-                    } catch(Exception e) {
-                        no = (Test1.compareTo(Test2));
+            for (int j = 0; j < (n - 1); j++) {
+                T Test1 = arr[j];
+                T Test2 = arr[j + 1];
+                try {
+                    Double Val2 = Double.parseDouble((String) Test2);
+                    Double Val1 = Double.parseDouble((String) Test1);
+                    if (Val2 < Val1) {
+                        no = 1;
+                    } else {
+                        no = -1;
                     }
-
-                    if (no > 0) {
-                        T temp = arr[j];
-                        arr[j] = arr[j+1];
-                        arr[j+1] = temp;
-                        check = check +1;
-                        fullsort = true;
-                    }
+                } catch (Exception e) {
+                    no = (Test1.compareTo(Test2));
                 }
+
+                if (no > 0) {
+                    T temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    check = check + 1;
+                    fullsort = true;
+                }
+            }
         }
         return arr;
     }
 
-    public static <T extends Comparable<T>> ArrayList InsertSort(T[] arr) {
-        int length = arr.length;
-        System.out.println(length);
-        ArrayList<T> sorted = new ArrayList<T>();
-        System.out.println(sorted.isEmpty());
-        T temporary;
-        sorted.add(arr[0]);
-        System.out.println(sorted.isEmpty());
-        for (int j = 0; j < (length); j++) {
-            for (int i = 1; i < ((length) - i); i++) {
-               /*
-                try {
-                    double firstVal = (double)arr[j];
-                    double secVal =  sorted.get(i);
-                    if (firstVal > secVal) {
-                        temporary = sorted.get(i);
-                        sorted.set(i,(arr[j]));
-                        sorted.set((i+1),temporary);
-                    } else {
-                        sorted.set((i+1),arr[j]);
-                    }
-                } catch (Exception e) {
-
-                */
-                    if (arr[j].compareTo(sorted.get(i)) < 0) {
-                        temporary = sorted.get(i);
-                        sorted.remove(i);
-                        sorted.add(i,arr[j]);
-                        sorted.add((i+1),temporary);
-                    } else {
-                        sorted.set((i+1),arr[j]);
-                    }
-                }
+    public static <T extends Comparable<T>> T[] InsertSort(T[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int currentIndex = i;
+            while (currentIndex > 0 && array[currentIndex - 1].compareTo(array[currentIndex]) > 0) {
+                T temp = array[currentIndex];
+                array[currentIndex] = array[currentIndex - 1];
+                array[currentIndex - 1] = temp;
+                currentIndex--;
             }
-       return sorted;
+        }
+        return array;
     }
 
-    public static <T extends Comparable<T>> void Compare(T[]Array) {
+    public static <T extends Comparable<T>> String Compare(T[]Array,  T[]Array2) {
+        long CompleteB;
+        long CompleteA;
         long startTime = System.nanoTime();
         Array = BubbSort(Array);
         long endTime = System.nanoTime();
-        System.out.println("That took " + (endTime - startTime) + " Microseconds");
+        CompleteA = endTime-startTime;
+        long secondST = System.nanoTime();
+        Array2 = InsertSort(Array2);
+        long secondET = System.nanoTime();
+        CompleteB= secondET-secondST;
         System.out.println(Arrays.toString(Array));
+        if (CompleteB > CompleteA) {
+            return ("Bubble Sort Preformed Quicker at at Time of"+CompleteA+"microseconds")
+        } else {
+            if (CompleteA==CompleteB) {
+                return ("Both Completed In Same Time"+CompleteA+"microseconds");
+            }
+            if (CompleteB < CompleteA) {
+                return ("Insertion Sort Preformed Quicker at at Time of" + CompleteB + "microseconds")
+            }
+        }
     }
+
 }
 
