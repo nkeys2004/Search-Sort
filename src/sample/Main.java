@@ -37,7 +37,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Search & Sort");
-        primaryStage.setOnCloseRequest(e -> closeProgram());
 
         // Main Home Screen Scene
         VBox MainScreen = new VBox(50);
@@ -54,6 +53,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         Searchbutton.setOnAction(e -> primaryStage.setScene(SearchScene));
         SortButton.setOnAction(e -> primaryStage.setScene(SortScene));
         StartScene = new Scene(MainScreen, 600, 300);
+        StartScene.getStylesheets().add("style.css");
 
 
         // Searching Screen Scene
@@ -139,6 +139,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         });
         SearchMain.getChildren().addAll(Title, Input1, Input2, SButtons);
         SearchScene = new Scene(SearchMain, 600, 300);
+        SearchScene.getStylesheets().add("style2.css");
 
         //Sorting Scene
         VBox SortMain = new VBox(50);
@@ -242,19 +243,22 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         });
         SortMain.getChildren().addAll(TitleSort, UnsortInput, SortButtons, Compare);
         SortScene = new Scene(SortMain, 600, 300);
-
+        SortScene.getStylesheets().add("style2.css");
+        primaryStage.setOnCloseRequest(e -> closeProgram(SeaValInput,SortValInput));
         primaryStage.setScene(StartScene);
         primaryStage.show();
     }
 
-    private void closeProgram() {
+    private void closeProgram(TextField option1, TextField option2) {
         System.out.println("File Save Here");
         try {
             Random rand = new Random();
             String filename = "Random"+rand+".txt";
             FileWriter myWriter = new FileWriter(filename);
-            myWriter.write("Files in Java might be tricky, but it is fun enough!");
-            myWriter.close();
+            String write1=option1.toString();
+            String write2=option2.toString();
+            myWriter.write(write1);
+            myWriter.write(write2);
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");

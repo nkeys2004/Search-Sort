@@ -30,7 +30,7 @@ public class AlertBox {
         Scene AlertScene = new Scene(layout, 300, 250);
         AlertWindow.setScene(AlertScene);
         AlertWindow.showAndWait();
-
+        AlertScene.getStylesheets().add("style2.css");
     }
 
 }

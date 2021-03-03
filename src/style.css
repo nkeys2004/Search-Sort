@@ -1,0 +1,21 @@
+@font-face {
+    font-family: Avenir;
+    src: url('Avenir.ttc');
+}
+
+.root {
+	-fx-background-color: #282828;
+	-fx-font-size: 35px;
+	-fx-text-fill:#929292;
+	-fx-font-family: 'Avenir';
+}
+
+.button {
+	fx-fill: #5e5e5e;
+	-fx-font-size: 12px;
+}
+
+.label {
+	fx-font-size: 35px;
+	-fx-text-fill:#929292;
+}
