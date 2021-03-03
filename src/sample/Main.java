@@ -1,5 +1,7 @@
 package sample;
+import java.io.FileWriter;
 import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.control.Button;
+import java.io.File;  // Import the File class
+import java.io.IOException;  // Import the IOException class to handle errors
 
 public class Main extends Application implements EventHandler<ActionEvent> {
     Button Searchbutton;
@@ -92,6 +96,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     linearLabel = ("Value Cannot be found");
                     break;
                 default: //If Value is not 1 or 0, it must be a multiple occurence situation
+                    for(int w=0;(w<=(namelist.size()-1));w++) {
+                        namelist.set(w,(namelist.get(w)+1));
+                    }
                     linearLabel = ("Values Found At Multiple Locations: Locations" + namelist);
                     break;
             }
@@ -119,6 +126,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     binaryLabel = ("Value Cannot be found");
                     break;
                 default: //If Value is not 1 or 0, it must be a multiple occurance situation
+                    for(int w=0;(w<=(Locationlist.size()-1));w++) {
+                        Locationlist.set(w,(Locationlist.get(w)+1));
+                    }
                     binaryLabel = ("Values Found At Multiple Locations: Locations" + Locationlist);
                     break;
             }
@@ -194,13 +204,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     i++;
                 }
                 Returnarray=InsertSort(Doublearray);
-                DecimalFormat df = new DecimalFormat("0.#");
+                DecimalFormat df = new DecimalFormat("0.#######");
                 int w = 0;
                 for (w = 0; w < (Returnarray.length); w++) {
-                    InsertArray[w] = (Double.valueOf(df.format(Returnarray[w]))).toString();
+                    InsertArray[w] = df.format(Double.valueOf((Double) Returnarray[w]).toString());
                 }
                 System.out.println("Sorted Array" + Arrays.toString(InsertArray));
-            } catch (Exception F) {
+            } catch (Exception f) {
                 InsertArray = InsertSort(array);
                 System.out.println("Sorted Array" +Arrays.toString(InsertArray));
             }
@@ -210,12 +220,9 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             primaryStage.setScene(StartScene);
         });
         Compare.setOnAction((e) -> {
-            String[] BubbleArray;
-            String ResultLabel;
             String Output;
             System.out.println(SortValInput.getText());
             String string = SortValInput.getText();
-            String string2 = SortValInput.getText();
             String[] array = string.split("[\\s,]+"); // split on on one or more spaces or commas
             System.out.println(Arrays.toString(array));
             try {
@@ -225,25 +232,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
                     intarray[i] = Double.parseDouble(str);//Exception in this line
                     i++;
                 }
-                BubbleArray = new String[array.length];
-                Double[] BubbleInt;
-                Output=Compare(intarray);
-                DecimalFormat df = new DecimalFormat("0.#");
-                int w = 0;
-                for (double d : BubbleInt) {
-                    BubbleArray[i] = (Double.valueOf(df.format(BubbleInt[i]))).toString();
-                    w++;
-                }
+                Output=Compare(intarray,intarray);
             } catch(Exception g) {
-                Output=Compare(array);
+                Output=Compare(array,array);
             }
             AlertBox.display("Effiency Test",Output,"Searching");
             SortValInput.clear();
             primaryStage.setScene(StartScene);
         });
-
-
-         */
         SortMain.getChildren().addAll(TitleSort, UnsortInput, SortButtons, Compare);
         SortScene = new Scene(SortMain, 600, 300);
 
@@ -253,34 +249,25 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     private void closeProgram() {
         System.out.println("File Save Here");
-    }
+        try {
+            Random rand = new Random();
+            String filename = "Random"+rand+".txt";
+            FileWriter myWriter = new FileWriter(filename);
+            myWriter.write("Files in Java might be tricky, but it is fun enough!");
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        }
 
     @Override
     public void handle(ActionEvent event) {
     }
 
     public static void main(String[] args) {
-        String[] array = takingarrayinput(); //Array To Be Searched Input
-        String[] InsertArray= new String[array.length];
-        Object[] Returnarray;
-        try {
-            Double[] Doublearray = new Double[array.length];
-            int i = 0;
-            for (String str : array) {
-                Doublearray[i] = Double.parseDouble(str);//Exception in this line
-                i++;
-            }
-            Returnarray=InsertSort(Doublearray);
-            DecimalFormat df = new DecimalFormat("0.#");
-            int w = 0;
-            for (w = 0; w < (Returnarray.length); w++) {
-                InsertArray[w] = (Double.valueOf(df.format(Returnarray[w]))).toString();
-            }
-            System.out.println("Sorted Array" + Arrays.toString(InsertArray));
-        } catch (Exception e) {
-            InsertArray = InsertSort(array);
-            System.out.println("Sorted Array" +Arrays.toString(InsertArray));
-        }
         launch(args);
     }
 
@@ -413,11 +400,24 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public static <T extends Comparable<T>> T[] InsertSort(T[] array) {
         for (int i = 1; i < array.length; i++) {
             int currentIndex = i;
-            while (currentIndex > 0 && array[currentIndex - 1].compareTo(array[currentIndex]) > 0) {
-                T temp = array[currentIndex];
-                array[currentIndex] = array[currentIndex - 1];
-                array[currentIndex - 1] = temp;
-                currentIndex--;
+            try {
+                Double val1 = Double.parseDouble((String)array[currentIndex-1]);
+                Double val2= Double.parseDouble((String)array[currentIndex]);
+                while (currentIndex >= 0 && val1.compareTo(val2) > 0) {
+                    T temp = array[currentIndex];
+                    array[currentIndex] = array[currentIndex - 1];
+                    array[currentIndex - 1] = temp; //Pushes value in current location up one place
+                    currentIndex--;
+                    val1 = Double.parseDouble((String)array[currentIndex-1]);
+                    val2= Double.parseDouble((String)array[currentIndex]);
+                }
+            } catch(Exception e) {
+                while (currentIndex > 0 && array[currentIndex - 1].compareTo(array[currentIndex]) > 0) {
+                    T temp = array[currentIndex];
+                    array[currentIndex] = array[currentIndex - 1];
+                    array[currentIndex - 1] = temp; //Pushes value in current location up one place
+                    currentIndex--;
+                }
             }
         }
         return array;
@@ -426,25 +426,26 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public static <T extends Comparable<T>> String Compare(T[]Array,  T[]Array2) {
         long CompleteB;
         long CompleteA;
-        long startTime = System.nanoTime();
+        String message = "";
+        long startTime = System.nanoTime(); //Starts Timer
         Array = BubbSort(Array);
-        long endTime = System.nanoTime();
-        CompleteA = endTime-startTime;
-        long secondST = System.nanoTime();
-        Array2 = InsertSort(Array2);
-        long secondET = System.nanoTime();
-        CompleteB= secondET-secondST;
-        System.out.println(Arrays.toString(Array));
-        if (CompleteB > CompleteA) {
-            return ("Bubble Sort Preformed Quicker at at Time of"+CompleteA+"microseconds")
+        long endTime = System.nanoTime(); // Ends Timer
+        CompleteA = endTime-startTime; //Find Bubble Sort time taken
+        long secondST = System.nanoTime(); //Starts Timer
+        Array2 = InsertSort(Array2); //Gives Copy of unsorted array
+        long secondET = System.nanoTime(); //End Timer
+        CompleteB= secondET-secondST; // Finds Total Time for Insertion Sort
+        if (CompleteB > CompleteA) { //Outputs Message dependant on faster
+            message = ("Bubble Sort Preformed Quicker at at Time of "+CompleteA+" microseconds");
         } else {
             if (CompleteA==CompleteB) {
-                return ("Both Completed In Same Time"+CompleteA+"microseconds");
+                message= ("Both Completed In Same Time "+CompleteA+" microseconds");
             }
             if (CompleteB < CompleteA) {
-                return ("Insertion Sort Preformed Quicker at at Time of" + CompleteB + "microseconds")
+                message = ("Insertion Sort Preformed Quicker at at Time of " + CompleteB + " microseconds");
             }
         }
+        return message;
     }
 
 }
